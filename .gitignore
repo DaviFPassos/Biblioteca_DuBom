@@ -1,0 +1,141 @@
+<<<<<<< HEAD
+# Virtual Environment
+venv_biblioteca_dubom/
+venv/
+venv_*/
+env/
+ENV/
+.venv/
+.env.local
+=======
+# Arquivos de ambiente com credenciais sensíveis
+backend/backend.env
+backend/.env
+.env
+
+# Virtual Environment
+venv_biblioteca_dubom/
+venv/
+env/
+ENV/
+>>>>>>> 02b6099 (security: adicionar .gitignore e remover backend.env do versionamento)
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Node
+node_modules/
+.npm
+.eslintcache
+
+<<<<<<< HEAD
+# Build and Distribution
+/dist/
+/build/
+
+# Package managers lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+composer.lock
+=======
+# Build
+dist/
+build/
+>>>>>>> 02b6099 (security: adicionar .gitignore e remover backend.env do versionamento)
+
+# Logs
+*.log
+npm-debug.log*
+<<<<<<< HEAD
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Backend rules ========
+backend/*.env
+backend/.env*
+!backend/*.env.example
+!backend/*.env.local.example
+.env
+.env.*
+!.env.example
+backend/__pycache__
+backend/__pycache__/main.cpython-312.pyc
+backend/backend.env
+# ======================
+
+# Frontend rules =======
+/frontend/logs
+/frontend/*.log
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/pnpm-debug.log*
+/frontend/lerna-debug.log*
+
+/frontend/node_modules
+/frontend/dist
+/frontend/dist-ssr
+/frontend/*.local
+
+# Editor directories and files
+/frontend/.vscode/*
+!/frontend/.vscode/extensions.json
+/frontend/.idea
+/frontend/.DS_Store
+/frontend/*.suo
+/frontend/*.ntvs*
+/frontend/*.njsproj
+/frontend/*.sln
+/frontend/*.sw?
+# ======================
+
+# Security & Sensitive Files ===
+*.key
+*.pem
+*.p12
+*.p8
+*.jks
+secrets/
+.aws/
+credentials.json
+api_keys.json
+# ==========================
+
+mobile_biblioteca_dubom
+mobile_biblioteca_dubom/node_modules/
+mobile_biblioteca_dubom/dist/
+mobile_biblioteca_dubom/.env
+
+SOLUCAO_PERSISTENCIA_AUTENTICACAO.md
+=======
+>>>>>>> 02b6099 (security: adicionar .gitignore e remover backend.env do versionamento)
