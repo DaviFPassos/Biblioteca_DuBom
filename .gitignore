@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Virtual Environment
 venv_biblioteca_dubom/
 venv/
@@ -55,7 +54,6 @@ node_modules/
 .npm
 .eslintcache
 
-<<<<<<< HEAD
 # Build and Distribution
 /dist/
 /build/
@@ -65,16 +63,15 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 composer.lock
-=======
+
 # Build
 dist/
 build/
->>>>>>> 02b6099 (security: adicionar .gitignore e remover backend.env do versionamento)
 
 # Logs
 *.log
 npm-debug.log*
-<<<<<<< HEAD
+
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
@@ -137,5 +134,4 @@ mobile_biblioteca_dubom/dist/
 mobile_biblioteca_dubom/.env
 
 SOLUCAO_PERSISTENCIA_AUTENTICACAO.md
-=======
->>>>>>> 02b6099 (security: adicionar .gitignore e remover backend.env do versionamento)
+
