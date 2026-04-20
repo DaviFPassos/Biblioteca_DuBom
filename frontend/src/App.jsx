@@ -88,18 +88,18 @@ function App() {
         setEmprestimosAtivos(emprestimosRes.data)
       } else if (tipoUsuario === 'membro' && usuarioLogado?.id) {
         try {
-          console.log(`🔍 DEBUG: Carregando dados do membro`)
+          console.log(` DEBUG: Carregando dados do membro`)
           console.log(`<svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#8C1AF6"><path d="M336.5-561Q278-620 278-704.5T336.34-847q58.34-58 143.5-58t143.66 58Q682-789 682-704.5T623.66-561q-58.34 59-143.5 59T336.5-561ZM114-86v-159q0-46.47 23.41-84.51Q160.81-367.56 201-387q66-34 136.31-51t142.5-17Q554-455 624-438t135 50q40.19 19.44 63.59 56.99Q846-293.47 846-245v159H114Z"/></svg> usuarioLogado:`, usuarioLogado)
-          console.log(`📝 ID do membro: ${usuarioLogado.id}`)
+          console.log(` ID do membro: ${usuarioLogado.id}`)
           const emprestimosRes = await axios.get(`${API_URL}/emprestimos/membro/${usuarioLogado.id}`)
-          console.log(`✅ Resposta recebida:`, emprestimosRes.data)
+          console.log(` Resposta recebida:`, emprestimosRes.data)
           setEmprestimosDoMembro(emprestimosRes.data.emprestimos || [])
           setRenovacoesRestantes(emprestimosRes.data.renovacoes_restantes || 0)
         } catch (error) {
-          console.error('❌ Erro ao carregar empréstimos do membro:', error)
-          console.error('❌ Detalhes do erro:', error.response?.data)
-          console.error('❌ Status do erro:', error.response?.status)
-          console.error('❌ URL tentada:', `${API_URL}/emprestimos/membro/${usuarioLogado.id}`)
+          console.error(' Erro ao carregar empréstimos do membro:', error)
+          console.error(' Detalhes do erro:', error.response?.data)
+          console.error(' Status do erro:', error.response?.status)
+          console.error(' URL tentada:', `${API_URL}/emprestimos/membro/${usuarioLogado.id}`)
         }
       }
     } catch (error) {
@@ -107,9 +107,43 @@ function App() {
     }
   }
 
+<<<<<<< HEAD
+=======
+  // Verificar autenticação ao carregar a página
+  useEffect(() => {
+    const verificarAutenticacao = async () => {
+      const userData = localStorage.getItem('usuarioLogado')
+      const userType = localStorage.getItem('tipoUsuario')
+      
+      if (userData && userType) {
+        try {
+          const usuario = JSON.parse(userData)
+          console.log(' Usuário encontrado no localStorage:', usuario)
+          
+          // Verificar se a sessão ainda é válida no servidor
+          const response = await axios.get(`${API_URL}/check-auth/${userType}`)
+          
+          if (response.status === 200 && response.data.autenticado) {
+            console.log(' Sessão validada no servidor')
+            setUsuarioLogado(usuario)
+            setTipoUsuario(userType)
+            setTela(userType)
+          }
+        } catch (error) {
+          console.log(' Sessão inválida, limpando localStorage')
+          localStorage.removeItem('usuarioLogado')
+          localStorage.removeItem('tipoUsuario')
+        }
+      }
+    }
+    
+    verificarAutenticacao()
+  }, [])
+
+>>>>>>> 493e930 (ajustes de front e mensagens de login)
   useEffect(() => {
     if (tela === 'admin' || tela === 'membro') {
-      console.log(`🔄 useEffect acionado: tela=${tela}, tipoUsuario=${tipoUsuario}, usuarioLogado:`, usuarioLogado)
+      console.log(` useEffect acionado: tela=${tela}, tipoUsuario=${tipoUsuario}, usuarioLogado:`, usuarioLogado)
       carregarDados()
     }
   }, [tela, tipoUsuario, usuarioLogado])
@@ -123,16 +157,28 @@ function App() {
         setUsuarioLogado(response.data)
         setTipoUsuario('admin')
         setTela('admin')
+<<<<<<< HEAD
         alert('✅ Login de administrador realizado com sucesso!')
+=======
+        // Salvar no localStorage
+        localStorage.setItem('usuarioLogado', JSON.stringify(response.data))
+        localStorage.setItem('tipoUsuario', 'admin')
+>>>>>>> 493e930 (ajustes de front e mensagens de login)
       } else {
         const response = await axios.post(`${API_URL}/membros/login`, loginDataMembro)
         setUsuarioLogado(response.data)
         setTipoUsuario('membro')
         setTela('membro')
+<<<<<<< HEAD
         alert('✅ Login de membro realizado com sucesso!')
+=======
+        // Salvar no localStorage
+        localStorage.setItem('usuarioLogado', JSON.stringify(response.data))
+        localStorage.setItem('tipoUsuario', 'membro')
+>>>>>>> 493e930 (ajustes de front e mensagens de login)
       }
     } catch (error) {
-      alert('❌ ' + (error.response?.data?.detail || 'Erro ao fazer login'))
+      alert(' ' + (error.response?.data?.detail || 'Erro ao fazer login'))
     }
   }
 
@@ -149,7 +195,7 @@ function App() {
   const cadastrarLivro = async () => {
     try {
       if (!senhaConfirmacaoLivro) {
-        alert('❌ Por favor, digite a senha do administrador para confirmar')
+        alert(' Por favor, digite a senha do administrador para confirmar')
         return
       }
       
@@ -157,13 +203,13 @@ function App() {
         ...formLivro,
         senha_admin: senhaConfirmacaoLivro
       })
-      alert('✅ Livro cadastrado com sucesso!')
+      alert(' Livro cadastrado com sucesso!')
       setShowModal(false)
       carregarDados()
       resetFormLivro()
       setSenhaConfirmacaoLivro('')
     } catch (error) {
-      alert('❌ ' + (error.response?.data?.detail || 'Erro ao cadastrar livro'))
+      alert(' ' + (error.response?.data?.detail || 'Erro ao cadastrar livro'))
     }
   }
 
@@ -172,10 +218,10 @@ function App() {
     
     try {
       await axios.delete(`${API_URL}/livros/${id}`)
-      alert('✅ Livro removido')
+      alert(' Livro removido')
       carregarDados()
     } catch (error) {
-      alert('❌ ' + (error.response?.data?.detail || 'Erro ao deletar'))
+      alert(' ' + (error.response?.data?.detail || 'Erro ao deletar'))
     }
   }
 
@@ -184,12 +230,12 @@ function App() {
   const cadastrarMembro = async () => {
     try {
       await axios.post(`${API_URL}/membros/cadastrar`, formMembro)
-      alert('✅ Membro cadastrado!')
+      alert(' Membro cadastrado!')
       setShowModal(false)
       carregarDados()
       resetFormMembro()
     } catch (error) {
-      alert('❌ ' + (error.response?.data?.detail || 'Erro ao cadastrar'))
+      alert(' ' + (error.response?.data?.detail || 'Erro ao cadastrar'))
     }
   }
 
@@ -198,7 +244,7 @@ function App() {
   const realizarEmprestimo = async () => {
     try {
       if (!senhaConfirmacaoEmprestimo) {
-        alert('❌ Por favor, digite a senha do membro para confirmar')
+        alert(' Por favor, digite a senha do membro para confirmar')
         return
       }
       
@@ -206,13 +252,13 @@ function App() {
         ...formEmprestimo,
         senha_membro: senhaConfirmacaoEmprestimo
       })
-      alert('✅ Empréstimo realizado!')
+      alert(' Empréstimo realizado!')
       setShowModal(false)
       carregarDados()
       resetFormEmprestimo()
       setSenhaConfirmacaoEmprestimo('')
     } catch (error) {
-      alert('❌ ' + (error.response?.data?.detail || 'Erro ao emprestar'))
+      alert(' ' + (error.response?.data?.detail || 'Erro ao emprestar'))
     }
   }
 
@@ -225,21 +271,21 @@ function App() {
         condicao_devolucao: 'bom',
         responsavel: 'Administrador'
       })
-      alert('✅ Devolução registrada!')
+      alert(' Devolução registrada!')
       carregarDados()
     } catch (error) {
-      alert('❌ Erro ao devolver')
+      alert(' Erro ao devolver')
     }
   }
 
   const renovarEmprestimo = async () => {
     if (!senhaRenovacao) {
-      alert('❌ Por favor, digite sua senha para confirmar')
+      alert(' Por favor, digite sua senha para confirmar')
       return
     }
     
     if (!emprestimoRenovacao) {
-      alert('❌ Erro ao processar renovação')
+      alert(' Erro ao processar renovação')
       return
     }
     
@@ -249,13 +295,13 @@ function App() {
         membro_id: usuarioLogado.id,
         senha_membro: senhaRenovacao
       })
-      alert('✅ Empréstimo renovado por mais 7 dias!')
+      alert(' Empréstimo renovado por mais 7 dias!')
       setShowModalRenovacao(false)
       setSenhaRenovacao('')
       setEmprestimoRenovacao(null)
       carregarDados()
     } catch (error) {
-      alert('❌ ' + (error.response?.data?.detail || 'Erro ao renovar empréstimo'))
+      alert(' ' + (error.response?.data?.detail || 'Erro ao renovar empréstimo'))
     }
   }
 
@@ -490,7 +536,8 @@ function App() {
 
           {/* Lista de Livros */}
           <div className="secao">
-            <h2><svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#8C1AF6"><path d="M480-111q-68-55-151-87.5T156-239v-365q96 7 178.5 47.5T480-461q63-55 145.5-95.5T804-604v365q-90 8-173 40.5T480-111Zm-90.5-545Q352-693 352-747.5t37.5-92Q427-877 481-877t91.5 37.5q37.5 37.5 37.5 92T572.5-656Q535-619 481-619t-91.5-37Z"/></svg> Acervo ({livrosFiltrados.length})</h2>
+            <h2><svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#8C1AF6"><path d="M480-111q-68-55-151-87.5T156-239v-365q96 7 178.5 47.5T480-461q63-55 145.5-95.5T804-604v365q-90 8-173 40.5T480-111Zm-90.5-545Q352-693 352-747.5t37.5-92Q427-877 481-877t91.5 37.5q37.5 37.5 37.5 92T572.5-656Q535-619 481-619t-91.5-37Z"/></svg>
+            Acervo ({livrosFiltrados.length})</h2>
             <div className="livros-grid">
               {livrosFiltrados.map(livro => (
                 <div key={livro.id} className="livro-card">
@@ -503,7 +550,7 @@ function App() {
                   </div>
                   <p className="livro-autor">Autor: {livro.autor}</p>
                   <p className="livro-info">Tipo: {livro.categoria || 'Sem categoria'}</p>
-                  <p className="livro-info">📍 {livro.localizacao || 'Não informado'}</p>
+                  <p className="livro-info"> {livro.localizacao || 'Não informado'}</p>
                   <div className="livro-disponibilidade">
                     <span className={livro.quantidade_disponivel > 0 ? 'disponivel' : 'indisponivel'}>
                       {livro.quantidade_disponivel > 0 ? 'Livro Disponível' : 'Livro Indisponível'}
@@ -576,7 +623,7 @@ function App() {
               {/* Modal Livro */}
               {modalTipo === 'livro' && (
                 <>
-                  <h2>➕ Cadastrar Livro</h2>
+                  <h2>Cadastrar Livro</h2>
                   <input placeholder="Título *" value={formLivro.titulo} onChange={(e) => setFormLivro({...formLivro, titulo: e.target.value})} />
                   <input placeholder="Autor *" value={formLivro.autor} onChange={(e) => setFormLivro({...formLivro, autor: e.target.value})} />
                   <input placeholder="Editora" value={formLivro.editora} onChange={(e) => setFormLivro({...formLivro, editora: e.target.value})} />
@@ -588,7 +635,7 @@ function App() {
                   </select>
                   <input type="number" placeholder="Quantidade" value={formLivro.quantidade_total} onChange={(e) => setFormLivro({...formLivro, quantidade_total: e.target.value})} />
                   <input placeholder="Localização (Ex: Estante A)" value={formLivro.localizacao} onChange={(e) => setFormLivro({...formLivro, localizacao: e.target.value})} />
-                  <input type="password" placeholder="🔒 Senha do Administrador *" value={senhaConfirmacaoLivro} onChange={(e) => setSenhaConfirmacaoLivro(e.target.value)} />
+                  <input type="password" placeholder=" Senha do Administrador *" value={senhaConfirmacaoLivro} onChange={(e) => setSenhaConfirmacaoLivro(e.target.value)} />
                   <div className="modal-acoes">
                     <button className="btn-secundario" onClick={() => {
                       setShowModal(false)
@@ -631,7 +678,7 @@ function App() {
                   <div className="busca-livro-container">
                     <input
                       type="text"
-                      placeholder="🔍 Digite o nome do livro..."
+                      placeholder="Digite o nome do livro..."
                       value={buscaLivroModal}
                       onChange={(e) => setBuscaLivroModal(e.target.value)}
                       className="input-busca-livro"
@@ -656,14 +703,14 @@ function App() {
                     )}
                     {formEmprestimo.livro_id && (
                       <div className="livro-selecionado">
-                        ✅ Livro selecionado: {livros.find(l => l.id === parseInt(formEmprestimo.livro_id))?.titulo}
+                         Livro selecionado: {livros.find(l => l.id === parseInt(formEmprestimo.livro_id))?.titulo}
                       </div>
                     )}
                   </div>
                   <div className="busca-membro-container">
                     <input
                       type="text"
-                      placeholder="🔍 Digite o nome do membro..."
+                      placeholder="Digite o nome do membro..."
                       value={buscaMembroModal}
                       onChange={(e) => setBuscaMembroModal(e.target.value)}
                       className="input-busca-membro"
@@ -688,12 +735,12 @@ function App() {
                     )}
                     {formEmprestimo.membro_id && (
                       <div className="membro-selecionado">
-                      ✅ Membro selecionado: {membros.find(m => m.id === parseInt(formEmprestimo.membro_id))?.nome}
+                        Membro selecionado: {membros.find(m => m.id === parseInt(formEmprestimo.membro_id))?.nome}
                       </div>
                     )}
                   </div>
-                  <input type="number" placeholder="⏰ Dias de Empréstimo (máx. 30 dias)" min="1" max="30" value={formEmprestimo.dias_emprestimo} onChange={(e) => setFormEmprestimo({...formEmprestimo, dias_emprestimo: e.target.value})} />
-                  <input type="password" placeholder="🔒 Senha do Membro *" value={senhaConfirmacaoEmprestimo} onChange={(e) => setSenhaConfirmacaoEmprestimo(e.target.value)} />
+                  <input type="number" placeholder="Dias de Empréstimo (máx. 30 dias)" min="1" max="30" value={formEmprestimo.dias_emprestimo} onChange={(e) => setFormEmprestimo({...formEmprestimo, dias_emprestimo: e.target.value})} />
+                  <input type="password" placeholder="Senha do Membro *" value={senhaConfirmacaoEmprestimo} onChange={(e) => setSenhaConfirmacaoEmprestimo(e.target.value)} />
                   <div className="modal-acoes">
                     <button className="btn-secundario" onClick={() => {
                       setShowModal(false)
@@ -847,7 +894,7 @@ function App() {
               </div>
               <input 
                 type="password" 
-                placeholder="🔒 Sua Senha *" 
+                placeholder="Sua Senha *" 
                 value={senhaRenovacao} 
                 onChange={(e) => setSenhaRenovacao(e.target.value)}
               />

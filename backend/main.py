@@ -387,7 +387,7 @@ async def cadastrar_membro(membro: MembroCreate):
 @app.post("/membros/login")
 async def login_membro(login: MembroLogin):
     """Login de membro"""
-    print(f"🔐 Tentativa de login: CPF {login.cpf}")
+    print(f" Tentativa de login: CPF {login.cpf}")
     
     global membro_logado
     
@@ -395,21 +395,21 @@ async def login_membro(login: MembroLogin):
     cursor = db.cursor(dictionary=True)
     
     try:
-        print(f"📊 Executando query no banco...")
+        print(f" Executando query no banco...")
         cursor.execute(
             """SELECT id, nome, cpf, email, cargo, emprestimos_ativos, max_emprestimos, status, senha
                FROM membros WHERE cpf = %s AND senha = %s""",
             (login.cpf, login.senha)
         )
         membro = cursor.fetchone()
-        print(f"✅ Query executada. Resultado: {membro}")
+        print(f" Query executada. Resultado: {membro}")
         
         if not membro:
-            print(f"❌ Nenhum membro encontrado")
+            print(f" Nenhum membro encontrado")
             raise HTTPException(status_code=401, detail="CPF ou senha incorretos")
         
         if membro['status'] != 'ativo':
-            print(f"❌ Membro bloqueado: {membro['status']}")
+            print(f" Membro bloqueado: {membro['status']}")
             raise HTTPException(status_code=403, detail="Membro bloqueado ou inativo")
         
         # Armazenar membro logado
@@ -422,12 +422,12 @@ async def login_membro(login: MembroLogin):
         membro_return = membro.copy()
         del membro_return['senha']
         
-        print(f"✅ Login bem-sucedido para {membro['nome']}")
+        print(f" Login bem-sucedido para {membro['nome']}")
         return membro_return
         
     except Exception as e:
-        print(f"❌ ERRO: {e}")
-        print(f"❌ Tipo do erro: {type(e)}")
+        print(f" ERRO: {e}")
+        print(f" Tipo do erro: {type(e)}")
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         cursor.close()
@@ -525,7 +525,7 @@ async def realizar_emprestimo(emp: EmprestimoCreate):
         data_emprestimo = date.today()
         data_prevista_devolucao = data_emprestimo + timedelta(days=emp.dias_emprestimo)
         
-        print(f"📅 DEBUG Empréstimo:")
+        print(f" DEBUG Empréstimo:")
         print(f"   Data de hoje (date.today()): {data_emprestimo}")
         print(f"   Data de devolução prevista: {data_prevista_devolucao}")
         print(f"   Dias: {emp.dias_emprestimo}")
@@ -639,14 +639,14 @@ async def devolver_livro(dev: DevolucaoRequest):
 @app.get("/emprestimos/membro/{membro_id}")
 async def listar_emprestimos_membro(membro_id: int):
     """Lista empréstimos ativos de um membro específico com contagem de renovações"""
-    print(f"🔍 DEBUG: Buscando empréstimos para membro_id={membro_id}")
+    print(f"DEBUG: Buscando empréstimos para membro_id={membro_id}")
     
     db = get_db()
     cursor = db.cursor(dictionary=True)
     
     try:
         # Buscar empréstimos ativos do membro
-        print(f"📊 Buscando empréstimos do membro {membro_id}")
+        print(f" Buscando empréstimos do membro {membro_id}")
         cursor.execute("""
             SELECT e.id, e.data_emprestimo, e.data_prevista_devolucao, 
                    e.status, e.renovacoes, e.max_renovacoes, l.titulo as livro
@@ -656,8 +656,8 @@ async def listar_emprestimos_membro(membro_id: int):
             ORDER BY e.data_prevista_devolucao ASC
         """, (membro_id,))
         emprestimos = cursor.fetchall()
-        print(f"✅ Encontrados {len(emprestimos) if emprestimos else 0} empréstimos")
-        print(f"📝 Empréstimos: {emprestimos}")
+        print(f" Encontrados {len(emprestimos) if emprestimos else 0} empréstimos")
+        print(f" Empréstimos: {emprestimos}")
         
         # Contar renovações usadas (somando renovações de todos os empréstimos ativos do membro)
         cursor.execute("""
@@ -672,18 +672,18 @@ async def listar_emprestimos_membro(membro_id: int):
         renovacoes_totais_permitidas = 3
         renovacoes_restantes = max(0, renovacoes_totais_permitidas - renovacoes_usadas)
         
-        print(f"💫 Renovações - Usadas: {renovacoes_usadas}, Restantes: {renovacoes_restantes}")
+        print(f" Renovações - Usadas: {renovacoes_usadas}, Restantes: {renovacoes_restantes}")
         
         resposta = {
             "emprestimos": emprestimos,
             "renovacoes_restantes": renovacoes_restantes
         }
-        print(f"✅ Resposta final: {resposta}")
+        print(f" Resposta final: {resposta}")
         return resposta
         
     except Exception as e:
-        print(f"❌ ERRO: {str(e)}")
-        print(f"❌ Tipo do erro: {type(e)}")
+        print(f" ERRO: {str(e)}")
+        print(f" Tipo do erro: {type(e)}")
         raise HTTPException(status_code=500, detail=f"Erro ao buscar empréstimos: {str(e)}")
     finally:
         cursor.close()
@@ -751,7 +751,7 @@ async def renovar_emprestimo(ren: RenovacaoRequest):
         # Atualizar empréstimo - adicionar 7 dias e incrementar contagem de renovações
         nova_data_devolucao = (datetime.strptime(str(emp['data_prevista_devolucao']), '%Y-%m-%d') + timedelta(days=7)).date()
         
-        print(f"🔄 Renovando empréstimo {ren.emprestimo_id}:")
+        print(f" Renovando empréstimo {ren.emprestimo_id}:")
         print(f"   Data anterior: {emp['data_prevista_devolucao']}")
         print(f"   Nova data: {nova_data_devolucao}")
         print(f"   Renovações usadas: {emp['renovacoes']} -> {emp['renovacoes'] + 1}")
@@ -766,7 +766,7 @@ async def renovar_emprestimo(ren: RenovacaoRequest):
         
         db.commit()
         
-        print(f"✅ Empréstimo renovado com sucesso!")
+        print(f" Empréstimo renovado com sucesso!")
         
         return {
             "sucesso": True,
@@ -778,7 +778,7 @@ async def renovar_emprestimo(ren: RenovacaoRequest):
     except HTTPException:
         raise
     except Exception as e:
-        print(f"❌ ERRO na renovação: {str(e)}")
+        print(f" ERRO na renovação: {str(e)}")
         db.rollback()
         raise HTTPException(status_code=400, detail=str(e))
     finally:
@@ -843,7 +843,7 @@ async def livros_mais_emprestados(limite: int = 10):
 @app.post("/admin/login")
 async def login_admin(login: AdministradorLogin):
     """Login de administrador"""
-    print(f"🔐 Tentativa de login admin: {login.usuario}")
+    print(f" Tentativa de login admin: {login.usuario}")
     
     global admin_logado
     
@@ -881,11 +881,11 @@ async def login_admin(login: AdministradorLogin):
         admin_return = admin.copy()
         del admin_return['senha']
         
-        print(f"✅ Login bem-sucedido para admin {admin['nome']}")
+        print(f" Login bem-sucedido para admin {admin['nome']}")
         return admin_return
         
     except Exception as e:
-        print(f"❌ ERRO: {e}")
+        print(f" ERRO: {e}")
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         cursor.close()
@@ -1073,6 +1073,6 @@ async def listar_historico(tipo_acao: Optional[str] = None, limite: int = 50):
 
 if __name__ == "__main__":
     import uvicorn
-    print("🚀 Iniciando Sistema de Biblioteca...")
-    print("📚 Acesse: http://127.0.0.1:8000/docs")
+    print("Iniciando Sistema de Biblioteca...")
+    print("Acesse: http://127.0.0.1:8000/docs")
     uvicorn.run(app, host="127.0.0.1", port=8000)

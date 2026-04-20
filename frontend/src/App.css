@@ -177,7 +177,7 @@ body {
 /* Sidebar */
 .sidebar {
   background: white;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -189,8 +189,13 @@ body {
   margin-bottom: 20px;
 }
 
+
 .sidebar-header h2 {
-  font-size: 24px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;  
+  font-size: 32px;
   color: var(--primary);
   margin-bottom: 5px;
 }
@@ -207,14 +212,20 @@ body {
   gap: 10px;
 }
 
+/* ======================================
+Configurações do texto da barra lateral
+========================================= */ 
 .nav-item {
-  padding: 12px 15px;
+  padding: 16px 25px;
   border: none;
   background: transparent;
   text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--dark);
   transition: all 0.2s;
 }
@@ -287,7 +298,7 @@ body {
 }
 
 .stat-card p {
-  font-size: 14px;
+  font-size: 18px;
   color: var(--gray);
 }
 
@@ -298,6 +309,9 @@ body {
   margin-bottom: 30px;
 }
 
+/*=================================
+Barra de pesquisa 'títul ou autor'
+=================================*/
 .input-busca {
   flex: 1;
   padding: 12px 20px;
@@ -306,6 +320,9 @@ body {
   font-size: 15px;
 }
 
+/*==================
+Barra de categorias
+==================*/
 .select-categoria {
   padding: 12px 20px;
   border: 2px solid var(--border);
@@ -323,8 +340,15 @@ body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
+/*======================================
+Seção Acervo - "Acervo" ao lado do ícone
+======================================*/
 .secao h2 {
+  text-align: center;
   font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
   color: var(--dark);
   margin-bottom: 20px;
   padding-bottom: 15px;
@@ -661,7 +685,11 @@ body {
 }
 
 .header-membro h1 {
+  text-align: left;
+  display: flex;
+  align-items:center;
   font-size: 24px;
+  gap: 8px;
   color: var(--dark);
 }
 
