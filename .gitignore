@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Virtual Environment
 venv_biblioteca_dubom/
 venv/
@@ -12,6 +13,8 @@ backend/backend.env
 backend/.env
 .env
 
+=======
+>>>>>>> 757fe82 (Organização dos arquivos .gitignore e limpeza do projeto)
 # Virtual Environment
 venv_biblioteca_dubom/
 venv/
@@ -68,14 +71,17 @@ composer.lock
 dist/
 build/
 
+
 # Logs
 *.log
 npm-debug.log*
+
 
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+
 
 # Backend rules ========
 backend/*.env
@@ -88,6 +94,12 @@ backend/.env*
 backend/__pycache__
 backend/__pycache__/main.cpython-312.pyc
 backend/backend.env
+
+# BAckend rules ========
+backend/backend.env
+backend/.env
+.env
+
 # ======================
 
 # Frontend rules =======
@@ -106,7 +118,10 @@ backend/backend.env
 
 # Editor directories and files
 /frontend/.vscode/*
+
 !/frontend/.vscode/extensions.json
+
+/frontend/!.vscode/extensions.json
 /frontend/.idea
 /frontend/.DS_Store
 /frontend/*.suo
@@ -135,3 +150,18 @@ mobile_biblioteca_dubom/.env
 
 SOLUCAO_PERSISTENCIA_AUTENTICACAO.md
 
+=======
+# Mobile rules =======
+/mobile_biblioteca_dubom/node_modules
+/mobile_biblioteca_dubom/dist
+/mobile_biblioteca_dubom/build
+/mobile_biblioteca_dubom/.expo/
+/mobile_biblioteca_dubom/npm-debug.*
+/mobile_biblioteca_dubom/*.jks
+/mobile_biblioteca_dubom/*.p8
+/mobile_biblioteca_dubom/*.p12
+/mobile_biblioteca_dubom/*.key
+/mobile_biblioteca_dubom/*.mobileprovision
+/mobile_biblioteca_dubom/*.orig.*
+/mobile_biblioteca_dubom/*.ipa
+# ======================
