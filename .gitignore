@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Virtual Environment
 venv_biblioteca_dubom/
 venv/
@@ -7,20 +6,18 @@ env/
 ENV/
 .venv/
 .env.local
-=======
 # Arquivos de ambiente com credenciais sensíveis
 backend/backend.env
 backend/.env
 .env
 
-=======
+
 >>>>>>> 757fe82 (Organização dos arquivos .gitignore e limpeza do projeto)
 # Virtual Environment
 venv_biblioteca_dubom/
 venv/
 env/
 ENV/
->>>>>>> 02b6099 (security: adicionar .gitignore e remover backend.env do versionamento)
 
 # Python
 __pycache__/
@@ -150,7 +147,6 @@ mobile_biblioteca_dubom/.env
 
 SOLUCAO_PERSISTENCIA_AUTENTICACAO.md
 
-=======
 # Mobile rules =======
 /mobile_biblioteca_dubom/node_modules
 /mobile_biblioteca_dubom/dist
